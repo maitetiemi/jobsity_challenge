@@ -1,9 +1,8 @@
 import sys
 import argparse
-import datetime
 import logging
 import logging.handlers
-from dateutil.relativedelta import relativedelta
+
 
 from ingestion.extract import DataProvider
 from ingestion.transform import DataTransformation
@@ -11,10 +10,6 @@ from config.settings import LOGGER_NAME
 
 from ingestion.load import ClientDataLoad
 
-from config.settings import CLIENT_TIME_UNIT_DAYS, \
-                                    CLIENT_TIME_UNIT_YEARS, \
-                                    CLIENT_TIME_UNIT_MINS, \
-                                    CLIENT_TIME_UNIT_HOURS
 
 __DELTA_LOAD__ = 'delta-load'
 __RECOVERY_LOAD__ = 'recovery-load'
@@ -83,53 +78,6 @@ def init_parser():
         required=True,
         help='path to log file'
     )
-    # # # Time execution modes
-    # period_subparsers = parser.add_subparsers(
-    #     title='Time Period',
-    #     dest='date_filter_type',
-    #     required=True,
-    #     description='specifies date filters to apply to source data'
-    # )
-    # delta_load_subparser = period_subparsers.add_parser(
-    #     __DELTA_LOAD__,
-    #     help='keep only data within a relative time window (ending today)'
-    # )
-    # delta_load_unit_group = delta_load_subparser.add_mutually_exclusive_group(required=True)
-    # delta_load_unit_group.add_argument(
-    #     '--hours',
-    #     type=int,
-    #     help='keep only data within the last specified hours'
-    # )
-    # delta_load_unit_group.add_argument(
-    #     '--days',
-    #     type=int,
-    #     help='keep only data within the last specified days'
-    # )
-    # delta_load_unit_group.add_argument(
-    #     '--years',
-    #     type=int,
-    #     help='keep only data within the last specified years'
-    # )
-    # recovery_load_subparser = period_subparsers.add_parser(
-    #     __RECOVERY_LOAD__,
-    #     help='keep only data within a relative time window (starting on a specified date)'
-    # )
-    # recovery_load_subparser.add_argument(
-    #     '--start-date',
-    #     type=(lambda s: datetime.datetime.strptime(s, '%Y-%m-%d')),
-    #     help='initial day of the recovery date used to filter data'
-    # )
-    # recovery_time_unit_group = recovery_load_subparser.add_mutually_exclusive_group(required=True)
-    # recovery_time_unit_group.add_argument(
-    #     '--days',
-    #     type=int,
-    #     help='keep only data within the next specified days from recovery date'
-    # )
-    # recovery_time_unit_group.add_argument(
-    #     '--years',
-    #     type=int,
-    #     help='keep only data within the next specified years from recovery date'
-    # )
 
     return parser
 
@@ -169,42 +117,6 @@ def main():
 
             # Entities to create
             jobsity = None
-
-            # start_date = None
-            # time_unit = None
-            # offset = None
-            #
-            # if args.date_filter_type in [__DELTA_LOAD__]:
-            #     if args.date_filter_type == __DELTA_LOAD__ and args.minutes:
-            #         time_unit = CLIENT_TIME_UNIT_MINS
-            #         offset = args.minutes
-            #     elif args.date_filter_type == __DELTA_LOAD__ and args.hours:
-            #         time_unit = CLIENT_TIME_UNIT_HOURS
-            #         offset = args.hours
-            #     elif args.days:
-            #         time_unit = CLIENT_TIME_UNIT_DAYS
-            #         offset = args.days
-            #     elif args.years:
-            #         time_unit = CLIENT_TIME_UNIT_YEARS
-            #         offset = args.years
-            #
-            #     if args.date_filter_type in [__DELTA_LOAD__]:
-            #         if args.minutes:
-            #             start_date = (datetime.datetime.now() -
-            #                           datetime.timedelta(minutes=offset)).strftime('%Y-%m-%d %H:%M:%S')
-            #         elif args.hours:
-            #             start_date = (datetime.datetime.now() -
-            #                           datetime.timedelta(hours=offset)).strftime('%Y-%m-%d %H:%M:%S')
-            #         elif args.days:
-            #             start_date = (datetime.datetime.now() -
-            #                           datetime.timedelta(days=offset)).strftime('%Y-%m-%d %H:%M:%S')
-            #         elif args.months:
-            #             start_date = (datetime.datetime.now() -
-            #                           relativedelta(months=+offset)).strftime('%Y-%m-%d %H:%M:%S')
-            #         elif args.years:
-            #             start_date = (datetime.datetime.now() -
-            #                           relativedelta(years=+offset)).strftime('%Y-%m-%d %H:%M:%S')
-            #         offset = offset
 
             logger.info('ETL Arguments ')
             logger.debug('ETL Arguments: {}'.format(args))
