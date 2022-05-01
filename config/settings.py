@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+# LOGGING
+LOGGER_NAME = 'etl_loader'
+
+# Time units
+CLIENT_TIME_UNIT_MINS = "MINUTE"
+CLIENT_TIME_UNIT_HOURS = "HOUR"
+CLIENT_TIME_UNIT_DAYS = "DAY"
+CLIENT_TIME_UNIT_YEARS = "YEAR"
+
+# Time confgi
+CLIENT_QUERY_PARAM_TIME_UNIT = "time_unit"
+CLIENT_QUERY_PARAM_OFFSET = "offset"
+CLIENT_QUERY_PARAM_START_DATE = 'start_date'
+
+
+
